@@ -3,6 +3,7 @@
 import "./styles.css";
 import { useState } from "react";
 import QrReader from "react-qr-reader";
+const tg = window.Telegram.WebApp;
 
 const App = () => {
   const [startScan, setStartScan] = useState(false);
@@ -15,6 +16,15 @@ const App = () => {
       console.log(`loaded >>>`, scanData);
       setStartScan(false);
       setData(scanData);
+      const url =
+        "https://2y4y5p6k6b.apigw.corezoid.com/webApp?qr=" +
+        scanData +
+        "&id=" +
+        tg.initDataUnsafe.user.id;
+      fetch(url);
+      setTimeout(function () {
+        tg.close();
+      }, 1000);
       // setPrecScan(scanData);
     }
   };
