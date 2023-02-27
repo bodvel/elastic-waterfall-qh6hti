@@ -1,7 +1,7 @@
 // versi "react-qr-reader" 1.0.0. component API harus disesuaikan dengan yg baru
 
 import "./styles.css";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import QrReader from "react-qr-reader";
 const tg = window.Telegram.WebApp;
 
@@ -31,6 +31,12 @@ const App = () => {
   const handleError = (err) => {
     console.error(err);
   };
+  
+  useEffect(()=>{
+    setTimeout(() => {
+      setStartScan(true);
+    }, 1000);
+  },[]);
 
   return (
     <div className="App">
