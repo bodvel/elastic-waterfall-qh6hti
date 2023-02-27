@@ -37,10 +37,12 @@ const App = () => {
     setImmediate(() => setStartScan(true)); // автоматически запускаем сканер
   }, []);
 
+  /*
   const handleLoad = () => {
     setIsLoaded(true); // отмечаем, что компонент загрузился
     setStartScan(true); // запускаем сканирование
   };
+  */
 
   return (
     <div className="App">
@@ -51,15 +53,14 @@ const App = () => {
       >
         {startScan ? "Stop Scan" : "Start Scan"}
       </button>
-      {isLoaded && startScan && (
+      {startScan && (
         <QrReader
           facingMode={selected}
           delay={2000}
           onError={handleError}
           onScan={handleScan}
-          legacyMode={true}
-          onLoad={handleLoad} // добавляем обработчик загрузки компонента
-          style={{ width: "300px" }}
+          //onLoad={handleLoad} // добавляем обработчик загрузки компонента
+          style={{ width: "100%" }}
         />
       )}
 
