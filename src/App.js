@@ -1,13 +1,14 @@
 // versi "react-qr-reader" 1.0.0. component API harus disesuaikan dengan yg baru
 
 import "./styles.css";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import QrReader from "react-qr-reader";
 const tg = window.Telegram.WebApp;
 
 const App = () => {
   const [startScan, setStartScan] = useState(false);
   const [data, setData] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
   const selected = "environment";
 
   const handleScan = async (scanData) => {
@@ -31,10 +32,15 @@ const App = () => {
   const handleError = (err) => {
     console.error(err);
   };
-  
- useEffect(() => {
+
+  useEffect(() => {
     setImmediate(() => setStartScan(true)); // автоматически запускаем сканер
   }, []);
+
+  const handleLoad = () => {
+    setIsLoaded(true); // отмечаем, что компонент загрузился
+    setStartScan(true); // запускаем сканирование
+  };
 
   return (
     <div className="App">
@@ -45,14 +51,14 @@ const App = () => {
       >
         {startScan ? "Stop Scan" : "Start Scan"}
       </button>
-      {startScan && (
+      {isLoaded && startScan && (
         <QrReader
           facingMode={selected}
           delay={2000}
           onError={handleError}
           onScan={handleScan}
           legacyMode={true}
-          // chooseDeviceId={()=>selected}
+          onLoad={handleLoad} // добавляем обработчик загрузки компонента
           style={{ width: "300px" }}
         />
       )}
