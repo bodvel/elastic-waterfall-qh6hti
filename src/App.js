@@ -32,11 +32,9 @@ const App = () => {
     console.error(err);
   };
   
-  useEffect(()=>{
-    setTimeout(() => {
-      setStartScan(true);
-    }, 1000);
-  },[]);
+ useEffect(() => {
+    setImmediate(() => setStartScan(true)); // автоматически запускаем сканер
+  }, []);
 
   return (
     <div className="App">
@@ -53,6 +51,7 @@ const App = () => {
           delay={2000}
           onError={handleError}
           onScan={handleScan}
+          legacyMode={true}
           // chooseDeviceId={()=>selected}
           style={{ width: "300px" }}
         />
